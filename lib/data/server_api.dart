@@ -14,7 +14,7 @@ class ServerAPI {
       'content-Type': 'text/xml',
     };
     dio.options.connectTimeout = 10000;
-    dio.options.receiveTimeout = 20000;
+    dio.options.receiveTimeout = 10000;
 
     try {
       final url = kIsWeb
@@ -44,6 +44,8 @@ class ServerAPI {
       String name, String email, String password) async {
     dio.options.responseType = ResponseType.plain;
     dio.options.headers = {'content-Type': 'text/xml'};
+    dio.options.connectTimeout = 10000;
+    dio.options.receiveTimeout = 10000;
 
     final builder = XmlBuilder();
     builder.processing('xml', 'version="1.0"');
@@ -86,6 +88,8 @@ class ServerAPI {
   Future<String> loginUser(String email, String password) async {
     dio.options.responseType = ResponseType.plain;
     dio.options.headers = {'content-Type': 'text/xml'};
+    dio.options.connectTimeout = 10000;
+    dio.options.receiveTimeout = 10000;
 
     final builder = XmlBuilder();
     builder.processing('xml', 'version="1.0"');
@@ -110,6 +114,7 @@ class ServerAPI {
           },
         ),
       );
+      print(response.statusCode);
       if (response.statusCode == 422) {
         return response.data.toString();
       } else if (response.statusCode! >= 400 && response.statusCode! < 500) {
@@ -120,7 +125,6 @@ class ServerAPI {
         return '';
       }
     } on DioError catch (e) {
-      print(e.message);
       return e.message;
     } catch (e) {
       return 'Unknown Error';
@@ -131,7 +135,7 @@ class ServerAPI {
     dio.options.responseType = ResponseType.plain;
     dio.options.headers = {'content-Type': 'text/xml'};
     dio.options.connectTimeout = 10000;
-    dio.options.receiveTimeout = 20000;
+    dio.options.receiveTimeout = 10000;
 
     try {
       final url = kIsWeb

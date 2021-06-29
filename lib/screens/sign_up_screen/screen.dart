@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:xml_final/components/main_button_widget.dart';
+import 'package:xml_final/data/models/user.dart';
 import 'package:xml_final/data/repository.dart';
 import 'package:xml_final/screens/home_screen/screen.dart';
 import 'package:xml_final/screens/sign_up_screen/widgets/sign_up_text_forms.dart';
@@ -80,6 +81,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             );
                       EasyLoading.dismiss();
                       if (response.isEmpty) {
+                        User.getInstance(
+                          name: _nameController.text,
+                          email: _emailController.text,
+                        );
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (_) => HomeScreen(),

@@ -196,11 +196,12 @@ class _WalkPlanningScreenState extends State<WalkPlanningScreen> {
             MainButtonWidget(
               text: 'Pay',
               onTap: () {
-                //TODO ADD PAYMENT and validation I GUESS
                 if (start == null || end == null) {
                   EasyLoading.showError('Select date and time');
                 } else if (end!.difference(start!).inHours < 1) {
                   EasyLoading.showError('Select valid time range');
+                } else {
+                  EasyLoading.showSuccess('Done!');
                 }
               },
             )

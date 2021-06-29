@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:xml_final/components/my_bottom_navigation_bar.dart';
 import 'package:xml_final/data/models/dog_walker.dart';
 import 'package:xml_final/data/repository.dart';
 import 'package:xml_final/screens/dog_walker_profile_screen/screen.dart';
@@ -40,6 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: MyBottomNavigationBar(),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
           : SingleChildScrollView(

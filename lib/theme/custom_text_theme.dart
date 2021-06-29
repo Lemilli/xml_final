@@ -80,8 +80,23 @@ class CustomTextTheme {
   );
 
   static const proflie_unselected_tab = const TextStyle(
-      fontFamily: "Poppins",
-      fontSize: 13,
-      fontWeight: FontWeight.w500,
-      color: ColorPalette.tab_grey_text);
+    fontFamily: "Poppins",
+    fontSize: 13,
+    fontWeight: FontWeight.w500,
+    color: ColorPalette.tab_grey_text,
+  );
+
+  static const unselected_bottom_tab = const TextStyle(
+    fontFamily: "Poppins",
+    fontSize: 10,
+    fontWeight: FontWeight.bold,
+    color: ColorPalette.textFieldHint,
+  );
+
+  static const selected_bottom_tab = const TextStyle(
+    fontFamily: "Poppins",
+    fontSize: 10,
+    fontWeight: FontWeight.bold,
+    color: ColorPalette.black,
+  );
 }

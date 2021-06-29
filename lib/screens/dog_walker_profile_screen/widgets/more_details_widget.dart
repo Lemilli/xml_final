@@ -1,10 +1,8 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:xml_final/components/main_button_widget.dart';
 import 'package:xml_final/data/models/dog_walker.dart';
-import 'package:xml_final/screens/dog_walker_profile_screen/widgets/reviews_tab_widget.dart';
 import 'package:xml_final/screens/dog_walker_profile_screen/widgets/small_details_widget.dart';
+import 'package:xml_final/screens/walk_planning_screen/screen.dart';
 import 'package:xml_final/theme/color_theme.dart';
 import 'package:xml_final/theme/custom_text_theme.dart';
 
@@ -101,7 +99,14 @@ class _MoreDetailsWidgetState extends State<MoreDetailsWidget> {
             MainButtonWidget(
               text: 'Check Schedule',
               onTap: () {
-                //TODO IMPLEMENT CHAT?
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => WalkPlanningScreen(
+                      price: widget.dogWalker.price,
+                    ),
+                  ),
+                );
               },
             ),
           ],
