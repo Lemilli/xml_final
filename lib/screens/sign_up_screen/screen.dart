@@ -74,8 +74,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               _emailController.text,
                               _passwordController.text,
                             )
-                          : await repository.toString();
-                      //TODO IMPORTANT AFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                          : await repository.loginUser(
+                              _emailController.text,
+                              _passwordController.text,
+                            );
                       EasyLoading.dismiss();
                       if (response.isEmpty) {
                         Navigator.of(context).push(

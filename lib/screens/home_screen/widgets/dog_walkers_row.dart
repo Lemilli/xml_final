@@ -23,7 +23,6 @@ class _DogWalkersRowState extends State<DogWalkersRow> {
     return Container(
       height: 190,
       child: ListView.builder(
-        reverse: widget.isSuggested ? true : false,
         scrollDirection: Axis.horizontal,
         itemCount: widget.dogWalkers.length,
         shrinkWrap: true,
@@ -32,7 +31,9 @@ class _DogWalkersRowState extends State<DogWalkersRow> {
             context,
             MaterialPageRoute(
               builder: (_) => DogWalkerProfileScreen(
-                dogWalker: widget.dogWalkers[index],
+                dogWalker: widget.dogWalkers[widget.isSuggested
+                    ? widget.dogWalkers.length - index - 1
+                    : index],
               ),
             ),
           ),
@@ -46,7 +47,12 @@ class _DogWalkersRowState extends State<DogWalkersRow> {
                   borderRadius: BorderRadius.circular(14),
                 ),
                 child: Image.network(
-                  widget.dogWalkers.elementAt(index).imageLink,
+                  widget.dogWalkers
+                      .elementAt(widget.isSuggested
+                          ? widget.dogWalkers.length - index - 1
+                          : index)
+                      .imageLink,
+                  errorBuilder: (_, __, ___) => Text("Couldn't load image"),
                   width: 200,
                   height: 125,
                   fit: BoxFit.cover,
@@ -61,7 +67,11 @@ class _DogWalkersRowState extends State<DogWalkersRow> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.dogWalkers.elementAt(index).name,
+                          widget.dogWalkers
+                              .elementAt(widget.isSuggested
+                                  ? widget.dogWalkers.length - index - 1
+                                  : index)
+                              .name,
                           style: CustomTextTheme.textFieldInput,
                         ),
                         SizedBox(height: 5),
@@ -78,7 +88,9 @@ class _DogWalkersRowState extends State<DogWalkersRow> {
                               ),
                               Text(
                                 widget.dogWalkers
-                                    .elementAt(index)
+                                    .elementAt(widget.isSuggested
+                                        ? widget.dogWalkers.length - index - 1
+                                        : index)
                                     .rating
                                     .toString(),
                                 style: CustomTextTheme.rating,
@@ -103,7 +115,9 @@ class _DogWalkersRowState extends State<DogWalkersRow> {
                           Text(
                             r'$' +
                                 widget.dogWalkers
-                                    .elementAt(index)
+                                    .elementAt(widget.isSuggested
+                                        ? widget.dogWalkers.length - index - 1
+                                        : index)
                                     .price
                                     .toString() +
                                 '/h',

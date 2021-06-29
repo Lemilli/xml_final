@@ -7,11 +7,16 @@ import 'package:xml_final/screens/dog_walker_profile_screen/widgets/more_details
 import 'package:xml_final/theme/color_theme.dart';
 import 'package:xml_final/theme/custom_text_theme.dart';
 
-class DogWalkerProfileScreen extends StatelessWidget {
+class DogWalkerProfileScreen extends StatefulWidget {
   final DogWalker dogWalker;
 
   const DogWalkerProfileScreen({required this.dogWalker});
 
+  @override
+  _DogWalkerProfileScreenState createState() => _DogWalkerProfileScreenState();
+}
+
+class _DogWalkerProfileScreenState extends State<DogWalkerProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
@@ -27,7 +32,8 @@ class DogWalkerProfileScreen extends StatelessWidget {
             Align(
               alignment: Alignment.topCenter,
               child: Image.network(
-                dogWalker.imageLink,
+                widget.dogWalker.imageLink,
+                errorBuilder: (_, __, ___) => Text("Couldn't load image"),
                 width: double.infinity,
                 height: _height * 0.43,
                 fit: BoxFit.cover,
@@ -90,7 +96,10 @@ class DogWalkerProfileScreen extends StatelessWidget {
               ),
             ),
             MoreDetailsWidget(
-                height: _height, width: _width, dogWalker: dogWalker)
+              height: _height,
+              width: _width,
+              dogWalker: widget.dogWalker,
+            ),
           ],
         ),
       ),
