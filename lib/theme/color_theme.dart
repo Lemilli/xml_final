@@ -15,6 +15,7 @@ class ColorPalette {
   static const tab_grey_light = Color(0xFFF5F5F5);
   static const tab_grey_text = Color(0xFFB0B0B0);
   static const orange = Color(0xFFFFA726);
+  static const orangeBubble = Color(0xFFFB724C);
   static const yellow = Color(0xFFFFCB55);
   static const transparent_grey = Color(0x66C4C4C4);
 

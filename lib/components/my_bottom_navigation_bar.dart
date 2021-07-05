@@ -6,20 +6,20 @@ import 'package:xml_final/screens/profile_screen/screen.dart';
 import 'package:xml_final/theme/color_theme.dart';
 import 'package:xml_final/theme/custom_text_theme.dart';
 
+int navBarIndex = 0;
+
 class MyBottomNavigationBar extends StatefulWidget {
   @override
   _MyBottomNavigationBarState createState() => _MyBottomNavigationBarState();
 }
 
 class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
-  int _selectedIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 65,
       child: BottomNavigationBar(
-        currentIndex: _selectedIndex,
+        currentIndex: navBarIndex,
         unselectedLabelStyle: CustomTextTheme.unselected_bottom_tab,
         selectedLabelStyle: CustomTextTheme.selected_bottom_tab,
         backgroundColor: Colors.white,
@@ -27,7 +27,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
         unselectedItemColor: ColorPalette.textFieldHint,
         onTap: (index) {
           setState(() {
-            _selectedIndex = index;
+            navBarIndex = index;
           });
           switch (index) {
             case 0:
@@ -55,7 +55,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
               'assets/svg_icons/home.svg',
-              color: _selectedIndex == 0
+              color: navBarIndex == 0
                   ? ColorPalette.black
                   : ColorPalette.textFieldHint,
             ),
@@ -64,7 +64,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
               'assets/svg_icons/chat.svg',
-              color: _selectedIndex == 1
+              color: navBarIndex == 1
                   ? ColorPalette.black
                   : ColorPalette.textFieldHint,
             ),
@@ -73,7 +73,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
               'assets/svg_icons/profile.svg',
-              color: _selectedIndex == 2
+              color: navBarIndex == 2
                   ? ColorPalette.black
                   : ColorPalette.textFieldHint,
             ),

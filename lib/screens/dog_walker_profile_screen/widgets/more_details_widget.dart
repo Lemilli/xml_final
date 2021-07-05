@@ -97,7 +97,7 @@ class _MoreDetailsWidgetState extends State<MoreDetailsWidget> {
             //     : ReviewsTabWidget(name: widget.dogWalker.name),
             SizedBox(height: 22),
             MainButtonWidget(
-              text: 'Check Schedule',
+              text: 'Plan walk',
               onTap: () {
                 Navigator.push(
                   context,

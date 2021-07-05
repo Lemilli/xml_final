@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:xml_final/data/models/review_mode.dart';
+import 'package:xml_final/data/models/review_model.dart';
 import 'package:xml_final/data/repository.dart';
 import 'package:xml_final/theme/color_theme.dart';
 

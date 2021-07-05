@@ -1,6 +1,8 @@
 import 'package:xml_final/data/models/dog_walker.dart';
-import 'package:xml_final/data/models/review_mode.dart';
+import 'package:xml_final/data/models/review_model.dart';
 import 'package:xml_final/data/server_api.dart';
+
+import 'models/user.dart';
 
 class Repository {
   final _serverApi = ServerAPI();
@@ -14,6 +16,11 @@ class Repository {
     return response;
   }
 
+  Future<String> postDogWalker(DogWalker dogWalker) async {
+    final response = await _serverApi.createDogWalker(dogWalker);
+    return response;
+  }
+
   Future<String> loginUser(String email, String password) async {
     final response = await _serverApi.loginUser(email, password);
     return response;
@@ -21,6 +28,11 @@ class Repository {
 
   Future<List<ReviewModel>> getReviews(String walkerName) async {
     final response = await _serverApi.getReviews(walkerName);
+    return response;
+  }
+
+  Future<User> getUser(String email) async {
+    final response = await _serverApi.getUser(email);
     return response;
   }
 }

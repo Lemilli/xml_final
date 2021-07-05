@@ -1,19 +1,35 @@
+import 'package:xml/xml.dart';
+
+User userFromXml(String str) {
+  final docXML = XmlDocument.parse(str);
+  final result = User.fromXML(docXML.findElements('user').first);
+  return result;
+}
+
 class User {
-  final String? email;
-  final String? name;
+  final String email;
+  final String name;
+  final String imageLink;
 
   User({
-    this.email,
-    this.name,
+    required this.email,
+    required this.name,
+    required this.imageLink,
   });
 
-  static User? _instance;
+  factory User.fromXML(XmlNode xml) {
+    return User(
+      name: xml.children[0].text,
+      email: xml.children[1].text,
+      imageLink: xml.children[2].text,
+    );
+  }
 
-  static User? getInstance({name, email}) {
-    if (_instance == null) {
-      _instance = User(name: name, email: email);
-      return _instance;
-    }
-    return _instance;
+  factory User.empty() {
+    return User(
+      email: '',
+      name: '',
+      imageLink: '',
+    );
   }
 }
