@@ -1,3 +1,4 @@
+import 'package:xml_final/data/models/article.dart';
 import 'package:xml_final/data/models/dog_walker.dart';
 import 'package:xml_final/data/models/review_model.dart';
 import 'package:xml_final/data/server_api.dart';
@@ -8,6 +9,11 @@ class Repository {
   final _serverApi = ServerAPI();
   Future<List<DogWalker>> getDogWalkers() async {
     final response = await _serverApi.getDogWalkers();
+    return response;
+  }
+
+  Future<List<Article>> getArticles() async {
+    final response = await _serverApi.getArticles();
     return response;
   }
 

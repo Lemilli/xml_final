@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:xml_final/components/main_button_widget.dart';
 import 'package:xml_final/data/models/dog_walker.dart';
+import 'package:xml_final/screens/dog_walker_profile_screen/widgets/reviews_tab_widget.dart';
 import 'package:xml_final/screens/dog_walker_profile_screen/widgets/small_details_widget.dart';
 import 'package:xml_final/screens/walk_planning_screen/screen.dart';
 import 'package:xml_final/theme/color_theme.dart';
@@ -32,6 +33,9 @@ class _MoreDetailsWidgetState extends State<MoreDetailsWidget> {
   Widget build(BuildContext context) {
     return Positioned(
       top: widget._height * 0.3,
+      left: 0,
+      right: 0,
+      bottom: 0,
       child: Container(
         width: widget._width,
         padding: EdgeInsets.symmetric(horizontal: 16),
@@ -85,16 +89,12 @@ class _MoreDetailsWidgetState extends State<MoreDetailsWidget> {
               ],
             ),
             SizedBox(height: 22),
-            AboutTabWidget(
-              description: widget.dogWalker.description,
-              experience: widget.dogWalker.experience,
-            ),
-            // selectedTabIndex == 0
-            //     ? AboutTabWidget(
-            //         description: widget.dogWalker.description,
-            //         experience: widget.dogWalker.experience,
-            //       )
-            //     : ReviewsTabWidget(name: widget.dogWalker.name),
+            selectedTabIndex == 0
+                ? AboutTabWidget(
+                    description: widget.dogWalker.description,
+                    experience: widget.dogWalker.experience,
+                  )
+                : ReviewsTabWidget(name: widget.dogWalker.name),
             SizedBox(height: 22),
             MainButtonWidget(
               text: 'Plan walk',

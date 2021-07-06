@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:xml_final/screens/chat_screen/screen.dart';
+import 'package:xml_final/screens/articles_screen/screen.dart';
 import 'package:xml_final/screens/home_screen/screen.dart';
 import 'package:xml_final/screens/profile_screen/screen.dart';
 import 'package:xml_final/theme/color_theme.dart';
@@ -39,7 +39,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
             case 1:
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (_) => ChatScreen()),
+                MaterialPageRoute(builder: (_) => ArticlesScreen()),
               );
               break;
             case 2:
@@ -63,12 +63,12 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
-              'assets/svg_icons/chat.svg',
+              'assets/svg_icons/document.svg',
               color: navBarIndex == 1
                   ? ColorPalette.black
                   : ColorPalette.textFieldHint,
             ),
-            label: 'Chat',
+            label: 'articles',
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset(

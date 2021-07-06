@@ -1,10 +1,9 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:xml/xml.dart';
 import 'package:xml_final/data/models/dog_walker.dart';
 
+import 'models/article.dart';
 import 'models/review_model.dart';
 import 'models/user.dart';
 
@@ -34,6 +33,39 @@ class ServerAPI {
       );
 
       return dogWalkersFromXml(response.data);
+    } on DioError catch (e) {
+      print(e.message);
+      return List.empty();
+    } catch (e) {
+      print('Exception unknown');
+      return List.empty();
+    }
+  }
+
+  Future<List<Article>> getArticles() async {
+    dio.options.responseType = ResponseType.plain;
+    dio.options.headers = {
+      'content-Type': 'text/xml',
+    };
+    dio.options.connectTimeout = 10000;
+    dio.options.receiveTimeout = 10000;
+
+    try {
+      final url = kIsWeb
+          ? 'http://localhost:4040/articles'
+          : 'http://10.0.2.2:4040/articles';
+      final response = await dio.get(
+        url,
+        options: Options(
+          followRedirects: false,
+          validateStatus: (status) {
+            return status! < 500;
+          },
+        ),
+      );
+
+      // for testin
+      return articlesFromXml(response.data);
     } on DioError catch (e) {
       print(e.message);
       return List.empty();
@@ -201,8 +233,8 @@ class ServerAPI {
 
     try {
       final url = kIsWeb
-          ? 'http://localhost:4040/reviews'
-          : 'http://10.0.2.2:4040/reviws';
+          ? 'http://localhost:4040/reviews?name=' + walkerName
+          : 'http://10.0.2.2:4040/reviews?name=' + walkerName;
       final response = await dio.get(
         url,
         options: Options(
@@ -212,6 +244,9 @@ class ServerAPI {
           },
         ),
       );
+      if (response.statusCode == 400) {
+        return List.empty();
+      }
 
       return reviewsFromXml(response.data);
     } on DioError catch (e) {

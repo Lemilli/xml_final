@@ -101,6 +101,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           itemBuilder:
                               (BuildContext context, DogWalker itemData) {
                             return ListTile(
+                              leading: CircleAvatar(
+                                foregroundImage:
+                                    NetworkImage(itemData.imageLink),
+                              ),
                               title: Text(
                                 itemData.name,
                                 style: TextStyle(fontFamily: 'Poppins'),
@@ -130,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             isSuggested: false, dogWalkers: _dogWalkers),
                     SizedBox(height: 10),
                     Divider(
-                      color: Colors.grey,
+                      color: Colors.grey.withOpacity(0.5),
                       endIndent: 16,
                       height: 1.5,
                     ),
