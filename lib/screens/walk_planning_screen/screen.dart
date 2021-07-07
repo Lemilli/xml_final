@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xml_final/components/main_button_widget.dart';
+import 'package:xml_final/data/models/walker_request.dart';
+import 'package:xml_final/data/repository.dart';
+import 'package:xml_final/global_variables/global_functions.dart';
+import 'package:xml_final/screens/home_screen/screen.dart';
 import 'package:xml_final/theme/color_theme.dart';
 import 'package:xml_final/theme/custom_text_theme.dart';
 
 class WalkPlanningScreen extends StatefulWidget {
   final int price;
+  final String walkerName;
 
-  const WalkPlanningScreen({required this.price});
+  const WalkPlanningScreen({
+    required this.price,
+    required this.walkerName,
+  });
   @override
   _WalkPlanningScreenState createState() => _WalkPlanningScreenState();
 }
@@ -16,58 +25,7 @@ class WalkPlanningScreen extends StatefulWidget {
 class _WalkPlanningScreenState extends State<WalkPlanningScreen> {
   DateTime? start;
   DateTime? end;
-
-  String getFormattedDateTime(DateTime dateTime) {
-    final minute = dateTime.minute < 10
-        ? '0' + dateTime.minute.toString()
-        : dateTime.minute.toString();
-    final hour = dateTime.hour < 10
-        ? '0' + dateTime.hour.toString()
-        : dateTime.hour.toString();
-    late final month;
-    switch (dateTime.month) {
-      case DateTime.january:
-        month = 'January';
-        break;
-      case DateTime.february:
-        month = 'February';
-        break;
-      case DateTime.march:
-        month = 'March';
-        break;
-      case DateTime.april:
-        month = 'April';
-        break;
-      case DateTime.may:
-        month = 'May';
-        break;
-      case DateTime.june:
-        month = 'June';
-        break;
-      case DateTime.july:
-        month = 'July';
-        break;
-      case DateTime.august:
-        month = 'August';
-        break;
-      case DateTime.september:
-        month = 'September';
-        break;
-      case DateTime.october:
-        month = 'October';
-        break;
-      case DateTime.november:
-        month = 'November';
-        break;
-      case DateTime.september:
-        month = 'September';
-        break;
-      case DateTime.december:
-        month = 'December';
-        break;
-    }
-    return '${dateTime.day} $month $hour:$minute';
-  }
+  final _repository = Repository();
 
   @override
   Widget build(BuildContext context) {
@@ -94,6 +52,7 @@ class _WalkPlanningScreenState extends State<WalkPlanningScreen> {
                   showTitleActions: true,
                   onConfirm: (date) {
                     start = date;
+                    print(start);
                     _updateState();
                   },
                   currentTime: DateTime.now(),
@@ -126,6 +85,7 @@ class _WalkPlanningScreenState extends State<WalkPlanningScreen> {
                   showTitleActions: true,
                   onConfirm: (date) {
                     end = date;
+                    print(end);
                     _updateState();
                   },
                   currentTime: DateTime.now(),
@@ -195,13 +155,38 @@ class _WalkPlanningScreenState extends State<WalkPlanningScreen> {
             SizedBox(height: 22),
             MainButtonWidget(
               text: 'Pay',
-              onTap: () {
+              onTap: () async {
                 if (start == null || end == null) {
                   EasyLoading.showError('Select date and time');
                 } else if (end!.difference(start!).inHours < 1) {
                   EasyLoading.showError('Select valid time range');
                 } else {
-                  EasyLoading.showSuccess('Done!');
+                  final totalProfit =
+                      end!.difference(start!).inHours * widget.price;
+
+                  final prefs = await SharedPreferences.getInstance();
+                  final _email = prefs.getString('email');
+
+                  final _walkerRequest = WalkerRequest(
+                    requesterEmail: _email!,
+                    walkerName: widget.walkerName,
+                    startDatetime: start!,
+                    endDatetime: end!,
+                    profit: totalProfit,
+                  );
+
+                  final response =
+                      await _repository.postWalkerRequest(_walkerRequest);
+
+                  if (response.isEmpty) {
+                    EasyLoading.showSuccess('Done!');
+                    await Future.delayed(Duration(seconds: 3));
+                    EasyLoading.dismiss();
+
+                    Navigator.of(context).pop();
+                  } else {
+                    EasyLoading.showError(response);
+                  }
                 }
               },
             )

@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         primaryColor: ColorPalette.white,
         accentColor: ColorPalette.orange,
       ),
-      home: ArticlesScreen(),
+      home: OnboardingScreen(),
     );
   }
 }

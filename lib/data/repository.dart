@@ -1,6 +1,7 @@
 import 'package:xml_final/data/models/article.dart';
 import 'package:xml_final/data/models/dog_walker.dart';
 import 'package:xml_final/data/models/review_model.dart';
+import 'package:xml_final/data/models/walker_request.dart';
 import 'package:xml_final/data/server_api.dart';
 
 import 'models/user.dart';
@@ -17,8 +18,15 @@ class Repository {
     return response;
   }
 
-  Future<String> postUser(String name, String email, String password) async {
-    final response = await _serverApi.registerUser(name, email, password);
+  Future<String> postUser(
+      String name, String email, String password, bool isDogWalker) async {
+    final response =
+        await _serverApi.registerUser(name, email, password, isDogWalker);
+    return response;
+  }
+
+  Future<String> postWalkerRequest(WalkerRequest walkerRequest) async {
+    final response = await _serverApi.postWalkerRequest(walkerRequest);
     return response;
   }
 

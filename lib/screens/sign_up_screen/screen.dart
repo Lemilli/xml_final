@@ -79,6 +79,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               _nameController.text,
                               _emailController.text,
                               _passwordController.text,
+                              false,
                             )
                           : await repository.loginUser(
                               _emailController.text,

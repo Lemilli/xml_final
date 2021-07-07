@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:xml/xml.dart';
 import 'package:xml_final/data/models/dog_walker.dart';
+import 'package:xml_final/data/models/walker_request.dart';
 
 import 'models/article.dart';
 import 'models/review_model.dart';
@@ -76,7 +77,7 @@ class ServerAPI {
   }
 
   Future<String> registerUser(
-      String name, String email, String password) async {
+      String name, String email, String password, bool isDogWalker) async {
     dio.options.responseType = ResponseType.plain;
     dio.options.headers = {'content-Type': 'text/xml'};
     dio.options.connectTimeout = 10000;
@@ -88,6 +89,7 @@ class ServerAPI {
       builder.element('name', nest: name);
       builder.element('email', nest: email);
       builder.element('password', nest: password);
+      builder.element('is_dog_walker', nest: isDogWalker.toString());
     });
 
     final data = builder.buildDocument();
@@ -95,6 +97,58 @@ class ServerAPI {
     try {
       final url =
           kIsWeb ? 'http://localhost:4040/user' : 'http://10.0.2.2:4040/user';
+
+      final response = await dio.post(
+        url,
+        data: data,
+        options: Options(
+          followRedirects: false,
+          validateStatus: (status) {
+            return status! < 500;
+          },
+        ),
+      );
+
+      print(response.statusCode);
+      if (response.statusCode == 400) {
+        return response.data.toString();
+      } else if (response.statusCode! >= 400 && response.statusCode! < 500) {
+        return 'Client Error. Try later.';
+      } else if (response.statusCode! >= 500) return 'Server error';
+
+      return '';
+    } on DioError catch (e) {
+      print(e.message);
+      return e.message;
+    } catch (e) {
+      return 'Unknown Error';
+    }
+  }
+
+  Future<String> postWalkerRequest(WalkerRequest _walkerRequest) async {
+    dio.options.responseType = ResponseType.plain;
+    dio.options.headers = {'content-Type': 'text/xml'};
+    dio.options.connectTimeout = 10000;
+    dio.options.receiveTimeout = 10000;
+
+    final builder = XmlBuilder();
+    builder.processing('xml', 'version="1.0"');
+    builder.element('walker_request', nest: () {
+      builder.element('requester_email', nest: _walkerRequest.requesterEmail);
+      builder.element('walker_name', nest: _walkerRequest.walkerName);
+      builder.element('start_datetime',
+          nest: _walkerRequest.startDatetime.toString());
+      builder.element('end_datetime',
+          nest: _walkerRequest.endDatetime.toString());
+      builder.element('profit', nest: _walkerRequest.profit);
+    });
+
+    final data = builder.buildDocument();
+
+    try {
+      final url = kIsWeb
+          ? 'http://localhost:4040/walker_request'
+          : 'http://10.0.2.2:4040/walker_request';
 
       final response = await dio.post(
         url,

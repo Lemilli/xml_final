@@ -104,6 +104,7 @@ class _MoreDetailsWidgetState extends State<MoreDetailsWidget> {
                   MaterialPageRoute(
                     builder: (_) => WalkPlanningScreen(
                       price: widget.dogWalker.price,
+                      walkerName: widget.dogWalker.name,
                     ),
                   ),
                 );
