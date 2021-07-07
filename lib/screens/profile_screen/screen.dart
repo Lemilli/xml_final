@@ -6,6 +6,7 @@ import 'package:xml_final/components/my_bottom_navigation_bar.dart';
 import 'package:xml_final/data/models/user.dart';
 import 'package:xml_final/data/repository.dart';
 import 'package:xml_final/screens/become_dog_walker_screen/screen.dart';
+import 'package:xml_final/screens/walk_requests_screen/screen.dart';
 import 'package:xml_final/theme/color_theme.dart';
 import 'package:xml_final/theme/custom_text_theme.dart';
 
@@ -66,18 +67,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       style: CustomTextTheme.appBarSubheading,
                     ),
                     Spacer(),
-                    MainButtonWidget(
-                      text: 'Become Dog Walker',
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) =>
-                                BecomeDogWalkerScreen(username: _user.name),
+                    _user.isDogWalker
+                        ? MainButtonWidget(
+                            text: 'View Walk Requests',
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (_) => WalkRequestsScreen(
+                                    walkerName: _user.name,
+                                  ),
+                                ),
+                              );
+                            },
+                          )
+                        : MainButtonWidget(
+                            text: 'Become Dog Walker',
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => BecomeDogWalkerScreen(
+                                      username: _user.name),
+                                ),
+                              );
+                            },
                           ),
-                        );
-                      },
-                    ),
                     SizedBox(height: 20),
                   ],
                 ),

@@ -21,7 +21,6 @@ class User {
   });
 
   factory User.fromXML(XmlNode xml) {
-    print(xml.children[3].text.toLowerCase());
     return User(
       name: xml.children[0].text,
       email: xml.children[1].text,

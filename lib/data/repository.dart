@@ -45,6 +45,11 @@ class Repository {
     return response;
   }
 
+  Future<List<WalkerRequest>> getWalkerRequests(String walkerName) async {
+    final response = await _serverApi.getWalkerRequests(walkerName);
+    return response;
+  }
+
   Future<User> getUser(String email) async {
     final response = await _serverApi.getUser(email);
     return response;

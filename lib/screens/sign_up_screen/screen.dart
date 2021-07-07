@@ -86,8 +86,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               _passwordController.text,
                             );
                       EasyLoading.dismiss();
+
                       if (response.isEmpty) {
                         _saveEmail(_emailController.text);
+
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (_) => HomeScreen(),

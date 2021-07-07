@@ -86,6 +86,20 @@ class CustomTextTheme {
     color: ColorPalette.tab_grey_text,
   );
 
+  static const walk_request_black = const TextStyle(
+    fontFamily: "Poppins",
+    fontSize: 13,
+    fontWeight: FontWeight.w500,
+    color: ColorPalette.black,
+  );
+
+  static const walk_request_grey = const TextStyle(
+    fontFamily: "Poppins",
+    fontSize: 13,
+    fontWeight: FontWeight.w500,
+    color: ColorPalette.grey,
+  );
+
   static const unselected_bottom_tab = const TextStyle(
     fontFamily: "Poppins",
     fontSize: 10,

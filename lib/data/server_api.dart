@@ -312,6 +312,39 @@ class ServerAPI {
     }
   }
 
+  Future<List<WalkerRequest>> getWalkerRequests(String walkerName) async {
+    dio.options.responseType = ResponseType.plain;
+    dio.options.headers = {'content-Type': 'text/xml'};
+    dio.options.connectTimeout = 10000;
+    dio.options.receiveTimeout = 10000;
+
+    try {
+      final url = kIsWeb
+          ? 'http://localhost:4040/get_walker_requests?name=' + walkerName
+          : 'http://10.0.2.2:4040/get_walker_requests?name=' + walkerName;
+      final response = await dio.get(
+        url,
+        options: Options(
+          followRedirects: false,
+          validateStatus: (status) {
+            return status! < 500;
+          },
+        ),
+      );
+      if (response.statusCode == 400) {
+        return List.empty();
+      }
+
+      return walkerRequestsXml(response.data);
+    } on DioError catch (e) {
+      print(e.message);
+      return List.empty();
+    } catch (e) {
+      print('Exception unknown');
+      return List.empty();
+    }
+  }
+
   Future<User> getUser(String email) async {
     dio.options.responseType = ResponseType.plain;
     dio.options.headers = {'content-Type': 'text/xml'};
