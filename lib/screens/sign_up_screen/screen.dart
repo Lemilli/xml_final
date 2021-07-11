@@ -106,7 +106,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   text: TextSpan(
                     children: [
                       TextSpan(
-                        text: "Already have an account? ",
+                        text: isSignUp
+                            ? "Already have an account? "
+                            : "Don't have an account? ",
                         style: const TextStyle(
                           fontSize: 13,
                           fontFamily: "Poppins",

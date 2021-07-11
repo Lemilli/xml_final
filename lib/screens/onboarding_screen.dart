@@ -64,9 +64,8 @@ class _State extends State<OnboardingScreen> {
           decoration: pageDecoration,
         ),
         PageViewModel(
-          title: "Find dog walkers",
-          body:
-              "Our community members will walk your dog, and you can focus on your business!",
+          title: "Wanna earn extra money?",
+          body: "Walk other people's dogs and earn money!",
           image: SvgPicture.asset(
             'assets/svg_icons/good_doggy.svg',
             width: _screenWidth * 0.7,

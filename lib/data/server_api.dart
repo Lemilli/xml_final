@@ -93,6 +93,7 @@ class ServerAPI {
     });
 
     final data = builder.buildDocument();
+    print(data.toXmlString());
 
     try {
       final url =
